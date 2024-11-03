@@ -19,13 +19,38 @@
         <th>Status</th>
       </tr>
     </thead>
-    <tbody></tbody>
+    <tbody id="table-body"></tbody>
     <tfoot></tfoot>
   </table>
 
   <form></form>
   <button>Add a Book</button>
   
-  <script></script>
+  <script>
+    const tableBody = document.getElementById('table-body');
+
+    const library = [];
+
+    function Book(title, author, readStatus) {
+      this.title = title;
+      this.author = author;
+      this.readStatus = readStatus;
+    }
+
+    library.push(new Book("Fellowship of the Ring", "JRR Tolkien", true));
+    library.push(new Book("The Two Towers", "JRR Tolkien", true));
+    library.push(new Book("Return of the King", "JRR Tolkien", false));
+    
+    for (const book of library) {
+      tableBody.innerHTML += `
+        <tr>
+          <td>${book.title}</td>
+          <td>${book.author}</td>
+          <td>${book.readStatus}</td>
+        </tr>
+      `;
+    }
+    
+  </script>
 </body>
 </html>
