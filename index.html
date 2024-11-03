@@ -16,6 +16,7 @@
 
     caption {
       font-size: 1.3rem;
+      padding: 5px;
     }
 
     col {
@@ -37,10 +38,40 @@
       font-size: 1.3rem;
     }
 
+    button {
+      font-size: 1.1rem;
+      border-radius: 10px;
+      padding: 10px;
+    }
+
+    button:hover {
+      cursor: pointer;
+      color: white;
+      background-color: gray;
+      border: 2px solid gray;
+    }
+
+    button:active {
+      background-color: black;
+      border: 2px solid black;
+    }
+
+    #add-book-wrapper {
+      width: 730px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+
     /* utility classes */
 
     .gray {
       background-color: rgb(245, 245, 245);
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
@@ -65,11 +96,19 @@
     <tfoot></tfoot>
   </table>
 
-  <form></form>
-  <button>Add a Book</button>
+  <form id="add-book-form" class="hidden">
+    <p>I exist</p>
+  </form>
+
+  <div id="add-book-wrapper">
+    <button id="add-book-btn" type="button" onclick="displayForm()">Add a Book</button>
+  </div>
   
   <script>
     const tableBody = document.getElementById('table-body');
+
+    const form = document.getElementById('add-book-form');
+    const addBookBtn = document.getElementById('add-book-btn');
 
     const library = [];
 
@@ -88,10 +127,15 @@
         <tr class="${(index % 2 == 0) ? "gray" : ""}">
           <td>${book.title}</td>
           <td>${book.author}</td>
-          <td>${book.readStatus}</td>
+          <td>${(book.readStatus) ? "Read it" : "On the List"}</td>
         </tr>
       `;
     });
+
+    function displayForm() {
+      addBookBtn.classList.add('hidden');
+      form.classList.remove('hidden');
+    }
     
   </script>
 </body>
