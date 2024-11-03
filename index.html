@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>My Library</title>
   
   <style>
     body {
@@ -64,6 +64,45 @@
       padding: 10px;
     }
 
+    form {
+      width: 350px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      border: 2px black solid;
+      padding: 25px;
+      border-radius: 15px;
+      margin-top: 15px;
+      background-color: rgb(240, 240, 240);
+    }
+
+    fieldset {
+      border: none;
+      width: 80%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+    }
+
+    fieldset:last-of-type {
+      margin-bottom: 25px;
+    }
+
+    fieldset > label {
+      width: 30%;
+      text-align: right;
+      margin-right: 10px;
+      font-size: 1.1rem;
+    }
+
+    fieldset > input[type='text'] {
+      width: 70%;
+      padding: 8px;
+      font-size: 1.1rem;
+    }
+
+
     /* utility classes */
 
     .gray {
@@ -73,42 +112,67 @@
     .hidden {
       display: none;
     }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
   </style>
 </head>
 <body>
-  <h1>My Library</h1>
+  <div class="container">
+    <h1>My Library</h1>
 
-  <table>
-    <caption>An overview of the books I've read.</caption>
-    <colgroup>
-      <col />
-      <col />
-      <col />
-    </colgroup>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody id="table-body"></tbody>
-    <tfoot></tfoot>
-  </table>
+    <table>
+      <caption>An overview of the books I've read.</caption>
+      <colgroup>
+        <col />
+        <col />
+        <col />
+      </colgroup>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody id="table-body"></tbody>
+      <tfoot></tfoot>
+    </table>
+    
+    <form id="add-book-form" class="hidden">
+      <h2>Add A Book</h2>
+      <fieldset>
+        <label for="book-title">Title: </label>
+        <input id="book-title" type="text" name="title" placeholder="Example Title">
+      </fieldset>
 
-  <form id="add-book-form" class="hidden">
-    <p>I exist</p>
-  </form>
+      <fieldset>
+        <label for="author">Author: </label>
+        <input id="author" type="text" name="author" placeholder="Ernest Hemingspoon">
+      </fieldset>
 
-  <div id="add-book-wrapper">
-    <button id="add-book-btn" type="button" onclick="displayForm()">Add a Book</button>
+      <fieldset>
+        <input type="checkbox" id="read-status" name="read-status">
+        <label for="read-status">I've read it</label>
+      </fieldset>
+      
+      <button type="button" onclick="addBook()">Submit</button>
+    </form>
+
+    <div id="add-book-wrapper">
+      <button id="add-book-btn" type="button" onclick="displayForm()">Add a Book</button>
+    </div>
   </div>
-  
+
   <script>
     const tableBody = document.getElementById('table-body');
-
     const form = document.getElementById('add-book-form');
     const addBookBtn = document.getElementById('add-book-btn');
+
+    
 
     const library = [];
 
@@ -121,20 +185,37 @@
     library.push(new Book("Fellowship of the Ring", "JRR Tolkien", true));
     library.push(new Book("The Two Towers", "JRR Tolkien", true));
     library.push(new Book("Return of the King", "JRR Tolkien", false));
+
+    renderLibrary();
     
-    library.forEach((book, index) => {
-      tableBody.innerHTML += `
-        <tr class="${(index % 2 == 0) ? "gray" : ""}">
-          <td>${book.title}</td>
-          <td>${book.author}</td>
-          <td>${(book.readStatus) ? "Read it" : "On the List"}</td>
-        </tr>
-      `;
-    });
+    /* OnClick event functions */
+    
+    
+
+    /* Utility functions */
 
     function displayForm() {
       addBookBtn.classList.add('hidden');
       form.classList.remove('hidden');
+    }
+
+    function hideForm() {
+      addBookBtn.classList.remove('hidden');
+      form.classList.add('hidden');
+    }
+
+    function renderLibrary() {
+      tableBody.innerHTML = '';
+
+      library.forEach((book, index) => {
+      tableBody.innerHTML += `
+          <tr class="${(index % 2 == 0) ? "gray" : ""}">
+            <td>${book.title}</td>
+            <td>${book.author}</td>
+            <td>${(book.readStatus) ? "Read it" : "On the List"}</td>
+          </tr>
+        `;
+      });
     }
     
   </script>
