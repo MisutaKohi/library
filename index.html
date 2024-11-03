@@ -5,13 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   
-  <style></style>
+  <style>
+    body {
+      font-family: sans-serif;
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    caption {
+      font-size: 1.3rem;
+    }
+
+    col {
+      width: 250px;
+    }
+
+    th {
+      font-size: 1.5rem;
+      background-color: rgb(215, 215, 215);
+    }
+
+    td, th {
+      text-align: center;
+      border: 1px gray solid;
+      padding: 10px;
+    }
+
+    td {
+      font-size: 1.3rem;
+    }
+
+    /* utility classes */
+
+    .gray {
+      background-color: rgb(245, 245, 245);
+    }
+  </style>
 </head>
 <body>
   <h1>My Library</h1>
 
   <table>
     <caption>An overview of the books I've read.</caption>
+    <colgroup>
+      <col />
+      <col />
+      <col />
+    </colgroup>
     <thead>
       <tr>
         <th>Title</th>
@@ -41,15 +83,15 @@
     library.push(new Book("The Two Towers", "JRR Tolkien", true));
     library.push(new Book("Return of the King", "JRR Tolkien", false));
     
-    for (const book of library) {
+    library.forEach((book, index) => {
       tableBody.innerHTML += `
-        <tr>
+        <tr class="${(index % 2 == 0) ? "gray" : ""}">
           <td>${book.title}</td>
           <td>${book.author}</td>
           <td>${book.readStatus}</td>
         </tr>
       `;
-    }
+    });
     
   </script>
 </body>
