@@ -136,7 +136,7 @@
         <tr>
           <th>Title</th>
           <th>Author</th>
-          <th>Status</th>
+          <th>Status <span style="font-size: 0.8rem;">(click me)</span></th>
           <th></th>
         </tr>
       </thead>
@@ -214,6 +214,11 @@
       renderLibrary();
     }
 
+    function updateStatus(index) {
+      library[index].readStatus = !library[index].readStatus;
+      renderLibrary();
+    }
+
     /* Utility functions */
 
     function displayForm() {
@@ -240,13 +245,14 @@
           <tr class="${(index % 2 == 0) ? "gray" : ""}">
             <td>${book.title}</td>
             <td>${book.author}</td>
-            <td>${(book.readStatus) ? "Read it" : "On the List"}</td>
+            <td style="cursor: pointer" onclick='updateStatus(${index})'>
+              ${(book.readStatus) ? "Read it" : "On the List"}
+            </td>
             <td><button style='color:red;' type='button' onclick='deleteBook(${index})'>X</button></td>
           </tr>
         `;
       });
     }
-    
   </script>
 </body>
 </html>
