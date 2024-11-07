@@ -18,7 +18,7 @@ const Library = class {
     }
 
     removeBook(index) {
-        this.splice(index, 1);
+        this.shelf.splice(index, 1);
     }
 }
 
@@ -28,19 +28,13 @@ const Book = class {
         this.author = author;
         this.readStatus = false;
     }
-
-    constructor(title, author, readStatus) {
-        this.title = title;
-        this.author = author;
-        this.readStatus = readStatus;
-    }
 }
 
 const library = new Library();
 
-library.addBook(new Book("Fellowship of the Ring", "JRR Tolkien", true));
-library.addBook(new Book("The Two Towers", "JRR Tolkien", true));
-library.addBook(new Book("Return of the King", "JRR Tolkien", false));
+library.addBook(new Book("Fellowship of the Ring", "JRR Tolkien"));
+library.addBook(new Book("The Two Towers", "JRR Tolkien"));
+library.addBook(new Book("Return of the King", "JRR Tolkien"));
 
 renderLibrary();
 
@@ -51,9 +45,8 @@ function addBook(event) {
 
     const bookTitle = titleInput.value;
     const name = authorInput.value;
-    const status = readStatusInput.checked;
 
-    library.push(new Book(bookTitle, name, status));
+    library.addBook(new Book(bookTitle, name));
 
     hideForm();
     resetFormValues();
@@ -62,12 +55,12 @@ function addBook(event) {
 }
 
 function deleteBook(index) {
-    library.splice(index, 1);
+    library.removeBook(index);
     renderLibrary();
 }
 
 function updateStatus(index) {
-    library[index].readStatus = !library[index].readStatus;
+    library.shelf[index].readStatus = !library.shelf[index].readStatus;
     renderLibrary();
 }
 
@@ -92,7 +85,7 @@ function resetFormValues() {
 function renderLibrary() {
     tableBody.innerHTML = '';
 
-    library.forEach((book, index) => {
+    library.shelf.forEach((book, index) => {
     tableBody.innerHTML += `
         <tr class="${(index % 2 == 0) ? "gray" : ""}">
         <td>${book.title}</td>
