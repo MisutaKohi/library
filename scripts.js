@@ -6,17 +6,41 @@ const titleInput = document.getElementById('book-title');
 const authorInput = document.getElementById('author');
 const readStatusInput = document.getElementById('read-status');
 
-const library = [];
+/* class declarations */
 
-function Book(title, author, readStatus) {
-    this.title = title;
-    this.author = author;
-    this.readStatus = readStatus;
+const Library = class {
+    constructor() {
+        this.shelf = [];
+    }
+
+    addBook(book) {
+        this.shelf.push(book);
+    }
+
+    removeBook(index) {
+        this.splice(index, 1);
+    }
 }
 
-library.push(new Book("Fellowship of the Ring", "JRR Tolkien", true));
-library.push(new Book("The Two Towers", "JRR Tolkien", true));
-library.push(new Book("Return of the King", "JRR Tolkien", false));
+const Book = class {
+    constructor(title, author) {
+        this.title = title;
+        this.author = author;
+        this.readStatus = false;
+    }
+
+    constructor(title, author, readStatus) {
+        this.title = title;
+        this.author = author;
+        this.readStatus = readStatus;
+    }
+}
+
+const library = new Library();
+
+library.addBook(new Book("Fellowship of the Ring", "JRR Tolkien", true));
+library.addBook(new Book("The Two Towers", "JRR Tolkien", true));
+library.addBook(new Book("Return of the King", "JRR Tolkien", false));
 
 renderLibrary();
 
